@@ -1,4 +1,5 @@
 import { Products } from "./products"
+import {getParticipantsSpreadsheet} from "./google-spreadsheet.service";
 
 const express = require('express')
 const cors = require('cors')
@@ -10,7 +11,12 @@ app.use(cors())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.get('/products/:id', function (req, res, next) {
+app.get('/participants', (req, res, ) => {
+  getParticipantsSpreadsheet().then(participants => {
+    res.json(participants);
+  });
+})
+app.get('/products/:id', function (req, res, ) {
     res.json({ msg: 'This is CORS-enabled for all origins!' })
 })
 

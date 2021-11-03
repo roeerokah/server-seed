@@ -20,8 +20,6 @@ export async function getParticipantsSpreadsheet() {
         name: row.Name,
         email: row.Email,
         chance: row.Chance,
-        phone: row['Phone number'],
-        numberOfYearsInAngular: row['Experience in years with Angular']
       }
       participants.push(participant);
     }

@@ -1,5 +1,6 @@
 import { Products } from "./products"
 import {getParticipantsSpreadsheet} from "./google-spreadsheet.service";
+import {getOfflineData} from "./csv.service";
 
 const express = require('express')
 const cors = require('cors')
@@ -12,15 +13,21 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/participants', (req, res, ) => {
-  getParticipantsSpreadsheet().then(participants => {
-    res.json(participants);
-  });
+  if (req.query.offline) {
+    getOfflineData('src/data2.csv').then(participants => {
+      res.json(participants);
+    });
+  } else {
+    getParticipantsSpreadsheet().then(participants => {
+      res.json(participants);
+    });
+  }
 })
-app.get('/products/:id', function (req, res, ) {
+app.get('/products/:id', (req, res, ) => {
     res.json({ msg: 'This is CORS-enabled for all origins!' })
 })
 
-app.get('/', function (req, res, next) {
+app.get('/', (req, res, next) => {
     const message = new Products().getMessage() 
     const paramsArr = [];
     if (!req.query) {
@@ -33,6 +40,6 @@ app.get('/', function (req, res, next) {
     }
 })
 
-app.listen(80, function () {
+app.listen(80, () => {
     console.log('CORS-enabled web server listening on port 80')
 })

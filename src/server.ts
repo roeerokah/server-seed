@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/participants', (req, res, ) => {
   if (req.query.offline) {
-    getOfflineData('src/data2.csv').then(participants => {
+    getOfflineData('src/data-new.csv').then(participants => {
       res.json(participants);
     });
   } else {

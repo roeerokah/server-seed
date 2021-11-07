@@ -20,14 +20,13 @@ export async function getOfflineData(path) {
         results.forEach((participantFromFile: FileParticipant) => {
           const participant: Participant = {
             name: participantFromFile.Name,
-            email: participantFromFile.Email,
-            chance: participantFromFile.Chance,
+            email: participantFromFile['Email address'],
           }
 
-          if (!names[participant.name]) {
-            names[participant.name] = true;
+          // if (!names[participant.name]) {
+          //   names[participant.name] = true;
             participants.push(participant);
-          }
+          // }
         })
 
 

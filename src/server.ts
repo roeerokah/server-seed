@@ -18,7 +18,7 @@ app.get('/participants', (req, res, ) => {
       res.json(participants);
     });
   } else {
-    getOfflineData('src/data-211.csv').then(participants => {
+    getOfflineData('src/data-20.csv').then(participants => {
       res.json(participants);
     });
   }

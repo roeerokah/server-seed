@@ -1,5 +1,5 @@
 import { Products } from "./products"
-import {getParticipantsSpreadsheet} from "./google-spreadsheet.service";
+import {getParticipantsSpreadsheet, writeWinnersToGoogleSheet} from "./google-spreadsheet.service";
 import {getOfflineData} from "./csv.service";
 
 const express = require('express')
@@ -13,12 +13,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/participants', (req, res, ) => {
-  if (req.query.offline) {
-    getOfflineData('src/data-new.csv').then(participants => {
+  if (req.query.fromSheet === 'true') {
+    getParticipantsSpreadsheet().then(participants => {
       res.json(participants);
     });
   } else {
-    getParticipantsSpreadsheet().then(participants => {
+    getOfflineData('src/data-211.csv').then(participants => {
       res.json(participants);
     });
   }
@@ -27,6 +27,16 @@ app.get('/products/:id', (req, res, ) => {
     res.json({ msg: 'This is CORS-enabled for all origins!' })
 })
 
+app.post('/declare-winner', (req, res,) => {
+  if (req.query.writeToSheet === 'true') {
+    console.log(req.body);
+    writeWinnersToGoogleSheet(req.body).then(() => {
+      res.json({ writtenToSheet: true })
+    })
+  } else {
+    res.json({writtenToSheet: false})
+  }
+})
 app.get('/', (req, res, next) => {
     const message = new Products().getMessage() 
     const paramsArr = [];

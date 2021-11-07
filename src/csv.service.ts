@@ -21,6 +21,7 @@ export async function getOfflineData(path) {
           const participant: Participant = {
             name: participantFromFile.Name,
             email: participantFromFile['Email address'],
+            identityId: participantFromFile['Identity ID'],
           }
 
           // if (!names[participant.name]) {
@@ -29,13 +30,7 @@ export async function getOfflineData(path) {
           // }
         })
 
-
         resolve(participants);
-
-        // [
-        //   { NAME: 'Daffy Duck', AGE: '24' },
-        //   { NAME: 'Bugs Bunny', AGE: '22' }
-        // ]
       });
     } catch (err) {
       resolve(err)

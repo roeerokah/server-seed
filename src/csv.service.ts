@@ -14,7 +14,6 @@ export async function getOfflineData(path) {
       .pipe(csv())
       .on('data', (data) => results.push(data))
       .on('end', () => {
-        const identityIds = {};
         console.log(results);
         const participants: Participant[] = []
         results.forEach((participantFromFile: FileParticipant) => {
@@ -24,11 +23,7 @@ export async function getOfflineData(path) {
             identityId: participantFromFile['Identity ID'],
           }
 
-          if (!identityIds[participant.identityId]) {
-            participants.push(participant);
-          }
-
-          identityIds[participant.identityId] = true;
+          participants.push(participant);
         })
 
         resolve(participants);
